@@ -32,7 +32,7 @@ The Codacy Integration Helper is a Python script designed to automate the proces
 Run the script from the command line with the following syntax:
 
 ```
-python codacy_integration_helper.py --token YOUR_CODACY_TOKEN --provider PROVIDER --organization ORG_NAME [OPTIONS]
+python follow-repo.py --token YOUR_CODACY_TOKEN --provider PROVIDER --organization ORG_NAME [OPTIONS]
 ```
 
 ### Required Arguments
@@ -50,17 +50,17 @@ python codacy_integration_helper.py --token YOUR_CODACY_TOKEN --provider PROVIDE
 
 Follow all repositories in a GitHub organization:
 ```
-python codacy_integration_helper.py --token YOUR_TOKEN --provider gh --organization YOUR_ORG
+python follow-repo.py.py --token YOUR_TOKEN --provider gh --organization YOUR_ORG
 ```
 
 Follow specific repositories in a GitLab organization:
 ```
-python codacy_integration_helper.py --token YOUR_TOKEN --provider gl --organization YOUR_ORG --reponame repo1,repo2,repo3
+python follow-repo.py.py --token YOUR_TOKEN --provider gl --organization YOUR_ORG --reponame repo1,repo2,repo3
 ```
 
 Use with a self-hosted Codacy instance:
 ```
-python codacy_integration_helper.py --token YOUR_TOKEN --provider bb --organization YOUR_ORG --baseurl https://codacy.your-domain.com
+python follow-repo.py.py --token YOUR_TOKEN --provider bb --organization YOUR_ORG --baseurl https://codacy.your-domain.com
 ```
 
 ## Notes
