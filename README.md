@@ -1,8 +1,8 @@
-# Codacy Integration Helper
+# Codacy Repository Follower
 
 ## Overview
 
-The Codacy Integration Helper is a Python script designed to automate the process of following repositories in Codacy. It uses the Codacy API to list all repositories in a specified organization and then follows each repository, streamlining the setup process for large organizations or projects with numerous repositories.
+The Codacy Repository Follower is a Python script designed to automate the process of following repositories in Codacy. It uses the Codacy API to list all repositories in a specified organization and then follows each repository, streamlining the setup process for large organizations or projects with numerous repositories.
 
 ## Features
 
