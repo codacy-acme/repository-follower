@@ -37,8 +37,8 @@ def listRepositories(baseurl, provider, organization, token):
             
             repositories.extend([repo['name'] for repo in data['data']])
             
-            if 'pagination' in data and 'next' in data['pagination']:
-                cursor = data['pagination']['next']
+            if 'pagination' in data and 'cursor' in data['pagination']:
+                cursor = data['pagination']['cursor']
                 logger.debug(f"Next page cursor: {cursor}")
             else:
                 break
