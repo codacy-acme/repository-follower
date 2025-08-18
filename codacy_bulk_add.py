@@ -90,6 +90,17 @@ def addRepository(baseurl, provider, organization, repo, token):
             if e.response.status_code == 409:
                 logger.warning(f"Repository {repo} already exists")
                 return False, f"Repository {repo} already exists: {e.response.status_code}"
+            elif e.response.status_code == 401:
+                # Check if the error message indicates the repository is already being followed
+                try:
+                    error_response = e.response.json()
+                    if "permission" in error_response.get("message", "").lower():
+                        logger.warning(f"Repository {repo} already exists (following state)")
+                        return False, f"Repository {repo} already exists: {e.response.status_code}"
+                except:
+                    pass
+                logger.error(f"Failed to add {repo}: {e.response.status_code}, Response: {e.response.text}")
+                return False, f"Failed to add {repo}: {e.response.status_code}, Response: {e.response.text}"
             else:
                 logger.error(f"Failed to add {repo}: {e.response.status_code}, Response: {e.response.text}")
                 return False, f"Failed to add {repo}: {e.response.status_code}, Response: {e.response.text}"
