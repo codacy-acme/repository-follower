@@ -108,43 +108,6 @@ def addRepository(baseurl, provider, organization, repo, token):
             logger.error(f"Failed to add {repo}: {str(e)}")
             return False, f"Failed to add {repo}: {str(e)}"
 
-def updateRepositoryIntegrationsSettings(baseurl, provider, organization, repo, token):
-    """Update repository integration settings to disable all integrations."""
-    headers = {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'api-token': token,
-        'caller': 'codacy-integration-helper'
-    }
-    data = {
-        "commitStatus": False,
-        "pullRequestComment": False,
-        "pullRequestSummary": False,
-        "coverageSummary": False,
-        "suggestions": False,
-        "aiEnhancedComments": False
-    }
-    url = f'{baseurl}/api/v3/organizations/{provider}/{organization}/repositories/{repo}/integrations/providerSettings'
-    
-    try:
-        logger.debug(f"Updating integration settings for {repo}...")
-        logger.debug(f"Making request to: {url}")
-        logger.debug(f"Request data: {json.dumps(data, indent=2)}")
-        
-        response = requests.patch(url, headers=headers, json=data)
-        response.raise_for_status()
-        
-        logger.info(f"Successfully updated integration settings for {repo}")
-        logger.debug(f"Response: {response.text}")
-        return True, f"Successfully updated integration settings {repo}: {response.status_code}"
-        
-    except requests.exceptions.RequestException as e:
-        if hasattr(e, 'response') and e.response is not None:
-            logger.error(f"Failed to update integration settings {repo}: {e.response.status_code}, Response: {e.response.text}")
-            return False, f"Failed to update integration settings {repo}: {e.response.status_code}, Response: {e.response.text}"
-        else:
-            logger.error(f"Failed to update integration settings {repo}: {str(e)}")
-            return False, f"Failed to update integration settings {repo}: {str(e)}"
 
 def processAllRepositories(baseurl, provider, organization, token, reponames=None, dry_run=False):
     """Process all repositories or specific ones if provided."""
@@ -179,12 +142,6 @@ def processAllRepositories(baseurl, provider, organization, token, reponames=Non
         
         if add_success:
             success_count += 1
-            # Update integration settings
-            settings_success, settings_message = updateRepositoryIntegrationsSettings(
-                baseurl, provider, organization, repo, token
-            )
-            if not settings_success:
-                logger.warning(f"Repository added but failed to update settings: {settings_message}")
         else:
             if "already exists" in add_message.lower():
                 already_exists_count += 1
