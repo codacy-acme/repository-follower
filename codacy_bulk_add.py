@@ -24,7 +24,7 @@ def listRepositories(baseurl, provider, organization, token):
     cursor = None
     
     while True:
-        current_url = f'{url}?limit=100' + (f'&cursor={quote(cursor)}' if cursor else '')
+        current_url = f'{url}?limit=100&filter=NotSynced' + (f'&cursor={quote(cursor)}' if cursor else '')
         logger.debug(f"Making request to: {current_url}")
         
         try:
